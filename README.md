@@ -1,2 +1,3 @@
-# stock-predictor
+# Stock predictor
+
 AI for predicting stock price.
