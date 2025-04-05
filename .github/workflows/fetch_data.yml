@@ -3,7 +3,7 @@ name: Fetch data on schedule
 on: 
   workflow_dispatch:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '0 0 * * *' # Everyday at 0:00 UTC time
 
 jobs:
   fetch_price:
@@ -41,6 +41,15 @@ jobs:
       - name: Run pre-process script
         run: |
           poetry run python src/data/price/preprocess_price_data.py
+
+      - name: Exit early if nothing to commit # Exits workflow without error
+        run: |
+          if [[ -z "$(git status --porcelain)" ]]; then
+            echo "Nothing to commit. Exiting workflow."
+            exit 0
+          else
+            echo "Found changes to commit."
+          fi
 
       - name: Commit data changes
         run: |
