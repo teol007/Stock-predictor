@@ -36,11 +36,11 @@ jobs:
 
       - name: Run fetch script
         run: |
-          poetry run python src\data\price\fetch_price_data.py
+          poetry run python src/data/price/fetch_price_data.py
       
       - name: Run pre-process script
         run: |
-          poetry run python src\data\price\preprocess_price_data.py
+          poetry run python src/data/price/preprocess_price_data.py
 
       - name: Commit data changes
         run: |
