@@ -21,6 +21,9 @@ jobs:
         run: |
           pipx install poetry
 
+      - name: Setup DVC
+        uses: iterative/setup-dvc@v1
+
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
@@ -30,6 +33,12 @@ jobs:
       - name: Install dependencies
         run: |
           poetry install --no-interaction --no-root
+
+      - name: DVC pull data
+        run: |
+          dvc remote modify origin --local access_key_id ${{ secrets.DAGSHUB_ACCESS_KEY_ID }}
+          dvc remote modify origin --local secret_access_key ${{ secrets.DAGSHUB_SECRET_ACCESS_KEY }}
+          dvc pull
 
       - name: Set environment variables
         run: echo "STOCK_PRICE_API_KEY=${{ secrets.STOCK_PRICE_API_KEY }}" >> $GITHUB_ENV
@@ -42,27 +51,16 @@ jobs:
         run: |
           poetry run python src/data/price/preprocess_price_data.py
 
-      - name: Check if there are changes to commit
-        id: checkChanges # Must have an id so a variable can be stored to step output
-        run: |
-          if [[ -z "$(git status --porcelain)" ]]; then
-            echo "Nothing to commit."
-            echo "isChanged=false" >> $GITHUB_OUTPUT
-          else
-            echo "Found changes to commit."
-            echo "isChanged=true" >> $GITHUB_OUTPUT
-          fi
-
       - name: Commit data changes
-        if: steps.checkChanges.outputs.isChanged == 'true' # If there are any changes then commit
         run: |
-          git add data
+          dvc add data
+          dvc push
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
+          git add data.dvc
           git commit -m "Updated raw price data on `date` with GitHub Actions"
         
       - name: Push changes
-        if: steps.checkChanges.outputs.isChanged == 'true' # If there are any changes then push
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.PAT_TOKEN }}
