@@ -54,7 +54,7 @@ jobs:
           fi
 
       - name: Commit data changes
-        if: steps.check_changes.outputs.isChanged == 'true' # If there are any changes then commit
+        if: steps.checkChanges.outputs.isChanged == 'true' # If there are any changes then commit
         run: |
           git add data
           git config --local user.email "actions@github.com"
@@ -62,7 +62,7 @@ jobs:
           git commit -m "Updated raw price data on `date` with GitHub Actions"
         
       - name: Push changes
-        if: steps.check_changes.outputs.isChanged == 'true' # If there are any changes then push
+        if: steps.checkChanges.outputs.isChanged == 'true' # If there are any changes then push
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.PAT_TOKEN }}
