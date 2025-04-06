@@ -42,16 +42,18 @@ jobs:
         run: |
           poetry run python src/data/price/preprocess_price_data.py
 
-      - name: Exit early if nothing to commit # Exits workflow without error
+      - name: Check if there are changes to commit
         run: |
           if [[ -z "$(git status --porcelain)" ]]; then
-            echo "Nothing to commit. Exiting workflow."
-            exit 0
+            echo "Nothing to commit."
+            echo "isChanged=false" >> $GITHUB_OUTPUT
           else
             echo "Found changes to commit."
+            echo "isChanged=true" >> $GITHUB_OUTPUT
           fi
 
       - name: Commit data changes
+        if: steps.check_changes.outputs.isChanged == "true" # If there are any changes then commit
         run: |
           git add data
           git config --local user.email "actions@github.com"
@@ -59,6 +61,7 @@ jobs:
           git commit -m "Updated raw price data on `date` with GitHub Actions"
         
       - name: Push changes
+        if: steps.check_changes.outputs.isChanged == "true" # If there are any changes then push
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.PAT_TOKEN }}
