@@ -50,17 +50,33 @@ jobs:
       - name: Run pre-process script
         run: |
           poetry run python src/data/price/preprocess_price_data.py
-
-      - name: Commit data changes
+        
+      - name: Push data changes to DVC
         run: |
           dvc add data
           dvc push
+
+      - name: Check if there are changes to commit
+        id: checkChanges # Must have an id so a variable can be stored to step output
+        run: |
+          if [[ -z "$(git status --porcelain data.dvc)" ]]; then
+            echo "No changes in data.dvc"
+            echo "isChanged=false" >> $GITHUB_OUTPUT
+          else
+            echo "Found changes in data.dvc"
+            echo "isChanged=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit data changes
+        if: steps.checkChanges.outputs.isChanged == 'true' # If there are changes in data.dvc then commit
+        run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
           git add data.dvc
           git commit -m "Updated raw price data on `date` with GitHub Actions"
-        
+      
       - name: Push changes
+        if: steps.checkChanges.outputs.isChanged == 'true' # If there are changes in data.dvc then push
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.PAT_TOKEN }}
