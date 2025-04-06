@@ -43,6 +43,7 @@ jobs:
           poetry run python src/data/price/preprocess_price_data.py
 
       - name: Check if there are changes to commit
+        id: checkChanges # Must have an id so a variable can be stored to step output
         run: |
           if [[ -z "$(git status --porcelain)" ]]; then
             echo "Nothing to commit."
