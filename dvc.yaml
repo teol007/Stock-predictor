@@ -1,0 +1,32 @@
+stages:
+  fetch:
+    cmd: |
+      poetry run python src/data/price/fetch_price_data.py
+      git commit -am "Updated raw price data on `date` with DVC pipeline and GitHub workflows" || echo "Ignore error"
+      git push || echo "Ignore error"
+      dvc push || echo "Ignore error"
+    deps:
+    - src/data/price/fetch_price_data.py
+    params:
+    - fetch_price.symbol
+    - fetch_price.exchange
+    - fetch_price.timezone
+    - fetch_price.interval
+    - fetch_price.weeks_ago
+    outs:
+    - data/raw/price/AAPL_price_data.json
+    always_changed: true
+
+  preprocess:
+    cmd: |
+      poetry run python src/data/price/preprocess_price_data.py
+      git commit -am "Updated preprocessed price data on `date` with DVC pipeline and GitHub workflows" || echo "Ignore error"
+      git push || echo "Ignore error"
+      dvc push || echo "Ignore error"
+    deps:
+    - src/data/price/preprocess_price_data.py
+    - data/raw/price/AAPL_price_data.json
+    # params.yaml is not used here  # params:
+    outs:
+    - data/preprocessed/price:
+        persist: true

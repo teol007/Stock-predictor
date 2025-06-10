@@ -1,0 +1,44 @@
+schema: '2.0'
+stages:
+  fetch:
+    cmd: "poetry run python src/data/price/fetch_price_data.py\ngit commit -am \"
+      Updated raw price data on `date` with DVC pipeline and GitHub workflows\" ||
+      echo \"Ignore error\"\ngit push || echo \"Ignore error\"\ndvc push || echo \"\
+      Ignore error\"\n"
+    deps:
+    - path: src/data/price/fetch_price_data.py
+      hash: md5
+      md5: 29c499019a8848522ece3e76fa757802
+      size: 1901
+    params:
+      params.yaml:
+        fetch_price.exchange: NASDAQ
+        fetch_price.interval: 15min
+        fetch_price.symbol: AAPL
+        fetch_price.timezone: Exchange
+        fetch_price.weeks_ago: 1
+    outs:
+    - path: data/raw/price/AAPL_price_data.json
+      hash: md5
+      md5: f789d5627f791e2e1c43da78c7ccb4c1
+      size: 19859
+  preprocess:
+    cmd: "poetry run python src/data/price/preprocess_price_data.py\ngit commit -am
+      \"Updated preprocessed price data on `date` with DVC pipeline and GitHub workflows\"\
+      \ || echo \"Ignore error\"\ngit push || echo \"Ignore error\"\ndvc push || echo
+      \"Ignore error\"\n"
+    deps:
+    - path: data/raw/price/AAPL_price_data.json
+      hash: md5
+      md5: f789d5627f791e2e1c43da78c7ccb4c1
+      size: 19859
+    - path: src/data/price/preprocess_price_data.py
+      hash: md5
+      md5: 8d579ab816c4e54f58f9a50058a45b05
+      size: 2221
+    outs:
+    - path: data/preprocessed/price
+      hash: md5
+      md5: 3baab8beddf1b4d0513651f50ad48d98.dir
+      size: 10218
+      nfiles: 1

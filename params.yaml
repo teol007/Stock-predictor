@@ -1,0 +1,6 @@
+fetch_price:
+  symbol: "AAPL"
+  exchange: "NASDAQ"
+  timezone: "Exchange"
+  interval: "15min"
+  weeks_ago: 1
