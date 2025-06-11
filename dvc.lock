@@ -34,52 +34,52 @@ stages:
       size: 16998
     - path: src/data/price/preprocess_price_data.py
       hash: md5
-      md5: 9ffc27e7abdb2d49df68d958e12878ae
-      size: 2169
+      md5: 8d579ab816c4e54f58f9a50058a45b05
+      size: 2221
     outs:
     - path: data/preprocessed/price
       hash: md5
-      md5: 094eabcf9c4e022b687ec719ba9567f9.dir
-      size: 379774
+      md5: 114f88f017de793039529d3d51044d97.dir
+      size: 385988
       nfiles: 1
   validate:
     cmd: "cd gx && poetry run python run_checkpoint.py\n"
     deps:
     - path: data/preprocessed/price/
       hash: md5
-      md5: 094eabcf9c4e022b687ec719ba9567f9.dir
-      size: 379774
+      md5: 114f88f017de793039529d3d51044d97.dir
+      size: 385988
       nfiles: 1
     - path: gx/run_checkpoint.py
       hash: md5
-      md5: b0e9b3633585fd8e79c24167559c7d98
-      size: 670
+      md5: 87faeba30a02a36a8005c0be056c806c
+      size: 702
     outs:
     - path: gx/uncommitted
       hash: md5
-      md5: 6ea5c32c5c3c43e4cb016175560044c5.dir
-      size: 7905394
-      nfiles: 82
+      md5: 1894e2a1c122aab0f2ec95e1fa372b29.dir
+      size: 7989762
+      nfiles: 84
   test_data:
     cmd: "poetry run python src/data/price/test_data.py\n"
     deps:
     - path: data/preprocessed/price/
       hash: md5
-      md5: 094eabcf9c4e022b687ec719ba9567f9.dir
-      size: 379774
+      md5: 114f88f017de793039529d3d51044d97.dir
+      size: 385988
       nfiles: 1
     - path: src/data/price/test_data.py
       hash: md5
-      md5: 89585172f59871bdd0ae8febccce3b62
-      size: 1926
+      md5: 3f95a42eb6e14ed5e1989d8c4dc676a8
+      size: 1986
     outs:
     - path: data/reference/price
       hash: md5
-      md5: 094eabcf9c4e022b687ec719ba9567f9.dir
-      size: 379774
+      md5: 114f88f017de793039529d3d51044d97.dir
+      size: 385988
       nfiles: 1
     - path: reports
       hash: md5
-      md5: 0d1f27dca1d9c06500a5b826fc51468d.dir
-      size: 3949226
+      md5: db6b864650b2c8bfd6f1209cbd3d9768.dir
+      size: 3950056
       nfiles: 2
