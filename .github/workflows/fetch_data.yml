@@ -69,3 +69,12 @@ jobs:
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_VALIDATION_SITE_ID }}
+
+      - name: Deploy data testing results to Netlify
+        uses: nwtgck/actions-netlify@v1.2
+        with:
+          publish-dir: "reports/price"
+          production-deploy: true
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_TEST_REPORT_SITE_ID }}
