@@ -3,11 +3,11 @@ name: Fetch data on schedule
 on: 
   workflow_dispatch:
   schedule:
-    - cron: '0 0 * * *' # Everyday at 0:00 UTC time
+    - cron: '15 0 * * *' # Everyday at 0:15 UTC time
 
 jobs:
-  fetch_price:
-    name: Fetch and pre-process price data
+  fetch_air:
+    name: Fetch and pre-process air data
     runs-on: ubuntu-latest
 
     steps:
@@ -20,7 +20,7 @@ jobs:
       - name: Install Poetry
         run: |
           pipx install poetry
-
+  
       - name: Setup DVC
         uses: iterative/setup-dvc@v1
 
@@ -29,54 +29,31 @@ jobs:
         with:
           python-version: "3.12"
           cache: poetry
+      
+      - name: Setup Git
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
         
       - name: Install dependencies
         run: |
           poetry install --no-interaction --no-root
 
-      - name: DVC pull data
+      - name: DVC setup remote
         run: |
           dvc remote modify origin --local access_key_id ${{ secrets.DAGSHUB_ACCESS_KEY_ID }}
           dvc remote modify origin --local secret_access_key ${{ secrets.DAGSHUB_SECRET_ACCESS_KEY }}
+
+      - name: Run DVC pipeline
+        run: |
           dvc pull
-
-      - name: Set environment variables
-        run: echo "STOCK_PRICE_API_KEY=${{ secrets.STOCK_PRICE_API_KEY }}" >> $GITHUB_ENV
-
-      - name: Run fetch script
-        run: |
-          poetry run python src/data/price/fetch_price_data.py
-      
-      - name: Run pre-process script
-        run: |
-          poetry run python src/data/price/preprocess_price_data.py
-        
-      - name: Push data changes to DVC
-        run: |
-          dvc add data
+          dvc status
+          dvc repro
           dvc push
-
-      - name: Check if there are changes to commit
-        id: checkChanges # Must have an id so a variable can be stored to step output
-        run: |
-          if [[ -z "$(git status --porcelain data.dvc)" ]]; then
-            echo "No changes in data.dvc"
-            echo "isChanged=false" >> $GITHUB_OUTPUT
-          else
-            echo "Found changes in data.dvc"
-            echo "isChanged=true" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Commit data changes
-        if: steps.checkChanges.outputs.isChanged == 'true' # If there are changes in data.dvc then commit
-        run: |
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Actions"
-          git add data.dvc
-          git commit -m "Updated raw price data on `date` with GitHub Actions"
-      
+          git add dvc.lock
+          git commit -m "Update dvc.lock on `date` with GitHub Actions" || true
+        
       - name: Push changes
-        if: steps.checkChanges.outputs.isChanged == 'true' # If there are changes in data.dvc then push
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.PAT_TOKEN }}
