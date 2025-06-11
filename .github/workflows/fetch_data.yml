@@ -39,6 +39,9 @@ jobs:
         run: |
           poetry install --no-interaction --no-root
 
+      - name: Set environment variables
+        run: echo "STOCK_PRICE_API_KEY=${{ secrets.STOCK_PRICE_API_KEY }}" >> $GITHUB_ENV
+
       - name: DVC setup remote
         run: |
           dvc remote modify origin --local access_key_id ${{ secrets.DAGSHUB_ACCESS_KEY_ID }}
