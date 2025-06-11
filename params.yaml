@@ -4,3 +4,10 @@ fetch_price:
   timezone: "Exchange"
   interval: "15min"
   weeks_ago: 1
+
+train_price:
+  dataset_filename: "AAPL.csv"
+  target_cols: ["open_price", "high_price", "low_price", "close_price"]
+  test_size: 2000
+  random_state: 42
+  window_size: 78
