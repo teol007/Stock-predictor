@@ -30,8 +30,8 @@ stages:
     deps:
     - path: data/raw/price/AAPL_price_data.json
       hash: md5
-      md5: 1401925943895910ea822becb5a6b080
-      size: 16998
+      md5: 8346419b2ea2de12fb1237c5e26b47ba
+      size: 17576
     - path: src/data/price/preprocess_price_data.py
       hash: md5
       md5: 9ffc27e7abdb2d49df68d958e12878ae
@@ -39,16 +39,16 @@ stages:
     outs:
     - path: data/preprocessed/price
       hash: md5
-      md5: 094eabcf9c4e022b687ec719ba9567f9.dir
-      size: 379774
+      md5: 33179647365152ab816ed7a05f675c3c.dir
+      size: 380042
       nfiles: 1
   validate:
     cmd: "cd gx && poetry run python run_checkpoint.py\n"
     deps:
     - path: data/preprocessed/price/
       hash: md5
-      md5: 094eabcf9c4e022b687ec719ba9567f9.dir
-      size: 379774
+      md5: 33179647365152ab816ed7a05f675c3c.dir
+      size: 380042
       nfiles: 1
     - path: gx/run_checkpoint.py
       hash: md5
@@ -57,16 +57,16 @@ stages:
     outs:
     - path: gx/uncommitted
       hash: md5
-      md5: 26c180c898ed691f666a7279d011e0b3.dir
-      size: 8073994
-      nfiles: 86
+      md5: fea498ce436d9805852a83f518569738.dir
+      size: 8158286
+      nfiles: 88
   test_data:
     cmd: "poetry run python src/data/price/test_data.py\n"
     deps:
     - path: data/preprocessed/price/
       hash: md5
-      md5: 094eabcf9c4e022b687ec719ba9567f9.dir
-      size: 379774
+      md5: 33179647365152ab816ed7a05f675c3c.dir
+      size: 380042
       nfiles: 1
     - path: src/data/price/test_data.py
       hash: md5
@@ -75,11 +75,11 @@ stages:
     outs:
     - path: data/reference/price
       hash: md5
-      md5: 094eabcf9c4e022b687ec719ba9567f9.dir
-      size: 379774
+      md5: 65a65047225daa2380a21a3394585692.dir
+      size: 380046
       nfiles: 1
     - path: reports
       hash: md5
-      md5: 498225329d816460cb764630b2abe8d2.dir
-      size: 3949226
+      md5: 0faea16475dad6cde7dd0ca10dc3bf99.dir
+      size: 3949144
       nfiles: 2
