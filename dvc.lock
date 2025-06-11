@@ -1,15 +1,15 @@
 schema: '2.0'
 stages:
   fetch:
-    cmd: "poetry run python src/data/price/fetch_price_data.py\ngit commit -am \"
+    cmd: "poetry run python src/data/price/fetch_price_data.py\ngit commit -am \"\
       Updated raw price data on `date` with DVC pipeline and GitHub workflows\" ||
       echo \"Ignore error\"\ngit push || echo \"Ignore error\"\ndvc push || echo \"\
       Ignore error\"\n"
     deps:
     - path: src/data/price/fetch_price_data.py
       hash: md5
-      md5: 29c499019a8848522ece3e76fa757802
-      size: 1901
+      md5: 20f55145d51c62cbc30bb2bbb9de1e0b
+      size: 1849
     params:
       params.yaml:
         fetch_price.exchange: NASDAQ
@@ -34,52 +34,52 @@ stages:
       size: 16998
     - path: src/data/price/preprocess_price_data.py
       hash: md5
-      md5: 8d579ab816c4e54f58f9a50058a45b05
-      size: 2221
+      md5: 9ffc27e7abdb2d49df68d958e12878ae
+      size: 2169
     outs:
     - path: data/preprocessed/price
       hash: md5
-      md5: 114f88f017de793039529d3d51044d97.dir
-      size: 385988
+      md5: 094eabcf9c4e022b687ec719ba9567f9.dir
+      size: 379774
       nfiles: 1
   validate:
     cmd: "cd gx && poetry run python run_checkpoint.py\n"
     deps:
     - path: data/preprocessed/price/
       hash: md5
-      md5: 114f88f017de793039529d3d51044d97.dir
-      size: 385988
+      md5: 094eabcf9c4e022b687ec719ba9567f9.dir
+      size: 379774
       nfiles: 1
     - path: gx/run_checkpoint.py
       hash: md5
-      md5: 87faeba30a02a36a8005c0be056c806c
-      size: 702
+      md5: b0e9b3633585fd8e79c24167559c7d98
+      size: 670
     outs:
     - path: gx/uncommitted
       hash: md5
-      md5: 62763e1f6edb36ea6cdd31c1a354f10b.dir
-      size: 7821158
-      nfiles: 80
+      md5: 6ea5c32c5c3c43e4cb016175560044c5.dir
+      size: 7905394
+      nfiles: 82
   test_data:
     cmd: "poetry run python src/data/price/test_data.py\n"
     deps:
     - path: data/preprocessed/price/
       hash: md5
-      md5: 114f88f017de793039529d3d51044d97.dir
-      size: 385988
+      md5: 094eabcf9c4e022b687ec719ba9567f9.dir
+      size: 379774
       nfiles: 1
     - path: src/data/price/test_data.py
       hash: md5
-      md5: 3f95a42eb6e14ed5e1989d8c4dc676a8
-      size: 1986
+      md5: 89585172f59871bdd0ae8febccce3b62
+      size: 1926
     outs:
     - path: data/reference/price
       hash: md5
-      md5: 114f88f017de793039529d3d51044d97.dir
-      size: 385988
+      md5: 094eabcf9c4e022b687ec719ba9567f9.dir
+      size: 379774
       nfiles: 1
     - path: reports
       hash: md5
-      md5: f20bec12ae5f000ac42f8611faae5a55.dir
-      size: 3950056
+      md5: 0d1f27dca1d9c06500a5b826fc51468d.dir
+      size: 3949226
       nfiles: 2
