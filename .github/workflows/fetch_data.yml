@@ -6,8 +6,8 @@ on:
     - cron: '15 0 * * *' # Everyday at 0:15 UTC time
 
 jobs:
-  fetch_air:
-    name: Fetch and pre-process air data
+  fetch_price:
+    name: Fetch and pre-process price data
     runs-on: ubuntu-latest
 
     steps:
@@ -60,3 +60,12 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.PAT_TOKEN }}
+
+      - name: Deploy data validation results to Netlify
+        uses: nwtgck/actions-netlify@v1.2
+        with:
+          publish-dir: "gx/uncommitted/data_docs/local_site"
+          production-deploy: true
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_VALIDATION_SITE_ID }}
