@@ -34,11 +34,11 @@ stages:
       size: 16998
     - path: src/data/price/preprocess_price_data.py
       hash: md5
-      md5: 9ffc27e7abdb2d49df68d958e12878ae
-      size: 2169
+      md5: 8d579ab816c4e54f58f9a50058a45b05
+      size: 2221
     outs:
     - path: data/preprocessed/price
       hash: md5
-      md5: 8cb66ef31e1aeff83f1f0300f75d1e6b.dir
-      size: 9422
+      md5: 114f88f017de793039529d3d51044d97.dir
+      size: 385988
       nfiles: 1
