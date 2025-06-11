@@ -39,15 +39,17 @@ jobs:
         run: |
           poetry install --no-interaction --no-root
 
-      - name: Set environment variables
-        run: echo "STOCK_PRICE_API_KEY=${{ secrets.STOCK_PRICE_API_KEY }}" >> $GITHUB_ENV
-
       - name: DVC setup remote
         run: |
           dvc remote modify origin --local access_key_id ${{ secrets.DAGSHUB_ACCESS_KEY_ID }}
           dvc remote modify origin --local secret_access_key ${{ secrets.DAGSHUB_SECRET_ACCESS_KEY }}
 
       - name: Run DVC pipeline
+        env:
+          STOCK_PRICE_API_KEY: ${{ secrets.STOCK_PRICE_API_KEY }}
+          MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}
+          MLFLOW_TRACKING_USERNAME: ${{ secrets.MLFLOW_TRACKING_USERNAME }}
+          MLFLOW_TRACKING_PASSWORD: ${{ secrets.MLFLOW_TRACKING_PASSWORD }}
         run: |
           dvc pull
           dvc status
@@ -55,7 +57,7 @@ jobs:
           dvc push
           git add dvc.lock
           git commit -m "Update dvc.lock on `date` with GitHub Actions" || true
-        
+
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:

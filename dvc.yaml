@@ -52,3 +52,25 @@ stages:
         persist: true
     - reports:
         persist: true
+
+  train:
+    cmd: |
+      poetry run python src/model/price/train.py
+      git commit -am "Updated model on `date` with DVC pipeline and GitHub workflows" || echo "Ignore error"
+      git push || echo "Ignore error"
+      dvc push || echo "Ignore error"
+    deps:
+    - data/preprocessed/price/
+    - gx/uncommitted             # <-- output of validate
+    - data/reference/price       # <-- output of test_data
+    - src/model/price/preprocess.py
+    - src/model/price/train.py
+    params:
+    - train.dataset_filename
+    - train.target_cols
+    - train.test_size
+    - train.random_state
+    - train.window_size
+    outs:
+    - models:
+        persist: true
