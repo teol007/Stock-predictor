@@ -66,11 +66,11 @@ stages:
     - src/model/price/preprocess.py
     - src/model/price/train.py
     params:
-    - train.dataset_filename
-    - train.target_cols
-    - train.test_size
-    - train.random_state
-    - train.window_size
+    - train_price.dataset_filename
+    - train_price.target_cols
+    - train_price.test_size
+    - train_price.random_state
+    - train_price.window_size
     outs:
     - models:
         persist: true

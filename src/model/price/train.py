@@ -183,24 +183,25 @@ with mlflow.start_run(run_name="train_price"):
     mlflow.log_metric("full_mse", mse_full)
     mlflow.log_metric("full_rmse", rmse_full)
 
-    # Save the model
-    dataset_name = Path(dataset_filename).stem
-    keras_model_path = f"models/model_price_{dataset_name}.keras"
+    # Save the model in keras format
+    Path("models/price").mkdir(parents=True, exist_ok=True) # Create directories if don't exist
+    dataset_name = Path(dataset_filename).stem # Get name without extension
+    keras_model_path = f"models/price/model_price_{dataset_name}.keras"
     model.save(keras_model_path)
     mlflow.log_artifact(keras_model_path)
     
-    # Convert to ONNX
+    # Save the model in ONNX format
     inputs = tf.keras.Input(shape=input_shape)
     outputs = model(inputs)
     model_functional_api = tf.keras.Model(inputs=inputs, outputs=outputs)
 
-    onnx_model_path = f"models/model_price_{dataset_name}.onnx"
+    onnx_model_path = f"models/price/model_price_{dataset_name}.onnx"
     input_signature = (tf.TensorSpec((None,) + input_shape, tf.float32, name="input"),)
     onnx_model, _ = tf2onnx.convert.from_keras(model_functional_api, input_signature=input_signature, opset=13)
     onnx.save(onnx_model, onnx_model_path)
     mlflow.log_artifact(onnx_model_path)
 
     # Save the pipeline
-    pipeline_path = f"models/pipeline_price_{dataset_name}.pkl"
+    pipeline_path = f"models/price/pipeline_price_{dataset_name}.pkl"
     joblib.dump(pipeline, pipeline_path)
     mlflow.log_artifact(pipeline_path)
