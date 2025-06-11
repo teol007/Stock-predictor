@@ -125,7 +125,7 @@ with mlflow.start_run(run_name="train_price"):
 
     # Train the model
     early_stopping = EarlyStopping(monitor="val_loss", patience=5, restore_best_weights=True)
-    history = model.fit(X_train, y_train, epochs=10, batch_size=32, validation_split=0.2, callbacks=[early_stopping]) #! Ephocs change
+    history = model.fit(X_train, y_train, epochs=50, batch_size=32, validation_split=0.2, callbacks=[early_stopping])
     
     # Make predictions
     y_pred = model.predict(X_test)
@@ -156,7 +156,7 @@ with mlflow.start_run(run_name="train_price"):
     # Train the model on the entire dataset
     X_full, y_full = pipeline.fit_transform(df)
     model = build_model((X_full.shape[1], X_full.shape[2]))
-    model.fit(X_full, y_full, epochs=10, batch_size=32, validation_split=0.2, callbacks=[early_stopping]) #! Ephocs change
+    model.fit(X_full, y_full, epochs=50, batch_size=32, validation_split=0.2, callbacks=[early_stopping])
     
     # Make predictions
     y_pred_full = model.predict(X_full)
