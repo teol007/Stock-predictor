@@ -40,3 +40,16 @@ stages:
     outs:
     - gx/uncommitted:
         persist: true
+
+  test_data:
+    cmd: |
+      poetry run python src/data/price/test_data.py
+    deps:
+    - src/data/price/test_data.py
+    - data/preprocessed/price/
+    - data/reference/price/
+    outs:
+    - data/reference/price:
+        persist: true
+    - reports:
+        persist: true
