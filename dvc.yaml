@@ -30,3 +30,13 @@ stages:
     outs:
     - data/preprocessed/price:
         persist: true
+
+  validate:
+    cmd: |
+      cd gx && poetry run python run_checkpoint.py
+    deps:
+    - gx/run_checkpoint.py
+    - data/preprocessed/price/
+    outs:
+    - gx/uncommitted:
+        persist: true
