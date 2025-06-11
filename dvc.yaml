@@ -47,7 +47,6 @@ stages:
     deps:
     - src/data/price/test_data.py
     - data/preprocessed/price/
-    - data/reference/price/
     outs:
     - data/reference/price:
         persist: true
