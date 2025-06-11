@@ -3,7 +3,7 @@ fetch_price:
   exchange: "NASDAQ"
   timezone: "Exchange"
   interval: "15min"
-  weeks_ago: 1
+  weeks_ago: 160
 
 train_price:
   dataset_filename: "AAPL.csv"
