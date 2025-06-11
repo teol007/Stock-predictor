@@ -83,3 +83,48 @@ stages:
       md5: 8051df18b570301c98f598829831b4e9.dir
       size: 3949787
       nfiles: 2
+  train:
+    cmd: "poetry run python src/model/price/train.py\ngit commit -am \"Updated model
+      on `date` with DVC pipeline and GitHub workflows\" || echo \"Ignore error\"\n
+      git push || echo \"Ignore error\"\ndvc push || echo \"Ignore error\"\n"
+    deps:
+    - path: data/preprocessed/price/
+      hash: md5
+      md5: da5b0b84688d800dc5bab586d518c858.dir
+      size: 387665
+      nfiles: 1
+    - path: data/reference/price
+      hash: md5
+      md5: 7b7a04e86dc9d19a00958c7e712eae11.dir
+      size: 387581
+      nfiles: 1
+    - path: gx/uncommitted
+      hash: md5
+      md5: 7c67dc3985d240606bb0bf1e153b6022.dir
+      size: 8242660
+      nfiles: 90
+    - path: src/model/price/preprocess.py
+      hash: md5
+      md5: e4a9f5b7431772373df796ac2d914316
+      size: 2037
+    - path: src/model/price/train.py
+      hash: md5
+      md5: c475da294beb7d58a252c72a591e5bad
+      size: 8304
+    params:
+      params.yaml:
+        train_price.dataset_filename: AAPL.csv
+        train_price.random_state: 42
+        train_price.target_cols:
+        - open_price
+        - high_price
+        - low_price
+        - close_price
+        train_price.test_size: 2000
+        train_price.window_size: 78
+    outs:
+    - path: models
+      hash: md5
+      md5: aa9d1e8842f89e1b9f54eb92cffbe660.dir
+      size: 564729
+      nfiles: 3
