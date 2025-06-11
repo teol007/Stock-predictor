@@ -90,27 +90,27 @@ stages:
     deps:
     - path: data/preprocessed/price/
       hash: md5
-      md5: 4b5ebc62ac3e622233121aec86fb134a.dir
-      size: 381341
+      md5: 7b7a04e86dc9d19a00958c7e712eae11.dir
+      size: 387581
       nfiles: 1
     - path: data/reference/price
       hash: md5
-      md5: 4b5ebc62ac3e622233121aec86fb134a.dir
-      size: 381341
+      md5: 7b7a04e86dc9d19a00958c7e712eae11.dir
+      size: 387581
       nfiles: 1
     - path: gx/uncommitted
       hash: md5
-      md5: 7f39c4a2839cb6244377ca41125febcb.dir
-      size: 8326886
-      nfiles: 92
+      md5: a9e436848efc2936b85f88d12501fb7d.dir
+      size: 8411264
+      nfiles: 94
     - path: src/model/price/preprocess.py
       hash: md5
-      md5: d2e7954043164204ac06f32f72d2bfaa
-      size: 1976
+      md5: e4a9f5b7431772373df796ac2d914316
+      size: 2037
     - path: src/model/price/train.py
       hash: md5
-      md5: 45a3b75631fb7d4ba151621032bd160e
-      size: 8097
+      md5: c475da294beb7d58a252c72a591e5bad
+      size: 8304
     params:
       params.yaml:
         train_price.dataset_filename: AAPL.csv
@@ -125,6 +125,6 @@ stages:
     outs:
     - path: models
       hash: md5
-      md5: 0bb229725850a548000dbb8476a404e9.dir
-      size: 564767
+      md5: 9e8aec158e6dd6b0f228696b7f5b7019.dir
+      size: 564761
       nfiles: 3
