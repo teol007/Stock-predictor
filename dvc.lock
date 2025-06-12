@@ -20,8 +20,8 @@ stages:
     outs:
     - path: data/raw/price/AAPL_price_data.json
       hash: md5
-      md5: da894bd5573d7185671edc353d9044e4
-      size: 16938
+      md5: d25339689bf9745655372411fb27de19
+      size: 17759
   preprocess:
     cmd: "poetry run python src/data/price/preprocess_price_data.py\ngit commit -am
       \"Updated preprocessed price data on `date` with DVC pipeline and GitHub workflows\"\
