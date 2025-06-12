@@ -34,54 +34,54 @@ stages:
       size: 16938
     - path: src/data/price/preprocess_price_data.py
       hash: md5
-      md5: 9ffc27e7abdb2d49df68d958e12878ae
-      size: 2169
+      md5: 8d579ab816c4e54f58f9a50058a45b05
+      size: 2221
     outs:
     - path: data/preprocessed/price
       hash: md5
-      md5: 4b5ebc62ac3e622233121aec86fb134a.dir
-      size: 381341
+      md5: 7b7a04e86dc9d19a00958c7e712eae11.dir
+      size: 387581
       nfiles: 1
   validate:
     cmd: "cd gx && poetry run python run_checkpoint.py\n"
     deps:
     - path: data/preprocessed/price/
       hash: md5
-      md5: 4b5ebc62ac3e622233121aec86fb134a.dir
-      size: 381341
+      md5: 7b7a04e86dc9d19a00958c7e712eae11.dir
+      size: 387581
       nfiles: 1
     - path: gx/run_checkpoint.py
       hash: md5
-      md5: b0e9b3633585fd8e79c24167559c7d98
-      size: 670
+      md5: 87faeba30a02a36a8005c0be056c806c
+      size: 702
     outs:
     - path: gx/uncommitted
       hash: md5
-      md5: 86b7daf76c711cb388ca385115c4f2f6.dir
-      size: 8495486
-      nfiles: 96
+      md5: ccdd44597f3a636fa16debbdcca6145b.dir
+      size: 8579868
+      nfiles: 98
   test_data:
     cmd: "poetry run python src/data/price/test_data.py\n"
     deps:
     - path: data/preprocessed/price/
       hash: md5
-      md5: 4b5ebc62ac3e622233121aec86fb134a.dir
-      size: 381341
+      md5: 7b7a04e86dc9d19a00958c7e712eae11.dir
+      size: 387581
       nfiles: 1
     - path: src/data/price/test_data.py
       hash: md5
-      md5: 89585172f59871bdd0ae8febccce3b62
-      size: 1926
+      md5: 3f95a42eb6e14ed5e1989d8c4dc676a8
+      size: 1986
     outs:
     - path: data/reference/price
       hash: md5
-      md5: 4b5ebc62ac3e622233121aec86fb134a.dir
-      size: 381341
+      md5: 7b7a04e86dc9d19a00958c7e712eae11.dir
+      size: 387581
       nfiles: 1
     - path: reports
       hash: md5
-      md5: c98da2e5609ae23f09cead714bbb3765.dir
-      size: 3948910
+      md5: 5fc4b2ab1a4325430c2badc57c795dcc.dir
+      size: 3949740
       nfiles: 2
   train:
     cmd: "poetry run python src/model/price/train.py\ngit commit -am \"Updated model
