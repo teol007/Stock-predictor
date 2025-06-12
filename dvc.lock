@@ -30,8 +30,8 @@ stages:
     deps:
     - path: data/raw/price/AAPL_price_data.json
       hash: md5
-      md5: 54a5f700f387a5d138e203ed141dbde3
-      size: 20309
+      md5: da894bd5573d7185671edc353d9044e4
+      size: 16938
     - path: src/data/price/preprocess_price_data.py
       hash: md5
       md5: 9ffc27e7abdb2d49df68d958e12878ae
