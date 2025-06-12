@@ -1,15 +1,15 @@
 schema: '2.0'
 stages:
   fetch:
-    cmd: "poetry run python src/data/price/fetch_price_data.py\ngit commit -am \"\
+    cmd: "poetry run python src/data/price/fetch_price_data.py\ngit commit -am \"
       Updated raw price data on `date` with DVC pipeline and GitHub workflows\" ||
       echo \"Ignore error\"\ngit push || echo \"Ignore error\"\ndvc push || echo \"\
       Ignore error\"\n"
     deps:
     - path: src/data/price/fetch_price_data.py
       hash: md5
-      md5: 20f55145d51c62cbc30bb2bbb9de1e0b
-      size: 1849
+      md5: 29c499019a8848522ece3e76fa757802
+      size: 1901
     params:
       params.yaml:
         fetch_price.exchange: NASDAQ
@@ -85,7 +85,7 @@ stages:
       nfiles: 2
   train:
     cmd: "poetry run python src/model/price/train.py\ngit commit -am \"Updated model
-      on `date` with DVC pipeline and GitHub workflows\" || echo \"Ignore error\"\n\
+      on `date` with DVC pipeline and GitHub workflows\" || echo \"Ignore error\"\n
       git push || echo \"Ignore error\"\ndvc push || echo \"Ignore error\"\n"
     deps:
     - path: data/preprocessed/price/
