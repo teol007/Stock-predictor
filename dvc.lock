@@ -30,8 +30,8 @@ stages:
     deps:
     - path: data/raw/price/AAPL_price_data.json
       hash: md5
-      md5: da894bd5573d7185671edc353d9044e4
-      size: 16938
+      md5: d25339689bf9745655372411fb27de19
+      size: 17759
     - path: src/data/price/preprocess_price_data.py
       hash: md5
       md5: 8d579ab816c4e54f58f9a50058a45b05
@@ -39,16 +39,16 @@ stages:
     outs:
     - path: data/preprocessed/price
       hash: md5
-      md5: 7b7a04e86dc9d19a00958c7e712eae11.dir
-      size: 387581
+      md5: d5cf0431a10db8430f4ef24a9cd6f8ab.dir
+      size: 387975
       nfiles: 1
   validate:
     cmd: "cd gx && poetry run python run_checkpoint.py\n"
     deps:
     - path: data/preprocessed/price/
       hash: md5
-      md5: 7b7a04e86dc9d19a00958c7e712eae11.dir
-      size: 387581
+      md5: d5cf0431a10db8430f4ef24a9cd6f8ab.dir
+      size: 387975
       nfiles: 1
     - path: gx/run_checkpoint.py
       hash: md5
@@ -57,16 +57,16 @@ stages:
     outs:
     - path: gx/uncommitted
       hash: md5
-      md5: ccdd44597f3a636fa16debbdcca6145b.dir
-      size: 8579868
-      nfiles: 98
+      md5: 50bdc9f564306850e2a7f3881a6f6399.dir
+      size: 8664178
+      nfiles: 100
   test_data:
     cmd: "poetry run python src/data/price/test_data.py\n"
     deps:
     - path: data/preprocessed/price/
       hash: md5
-      md5: 7b7a04e86dc9d19a00958c7e712eae11.dir
-      size: 387581
+      md5: d5cf0431a10db8430f4ef24a9cd6f8ab.dir
+      size: 387975
       nfiles: 1
     - path: src/data/price/test_data.py
       hash: md5
@@ -75,13 +75,13 @@ stages:
     outs:
     - path: data/reference/price
       hash: md5
-      md5: 7b7a04e86dc9d19a00958c7e712eae11.dir
-      size: 387581
+      md5: d5cf0431a10db8430f4ef24a9cd6f8ab.dir
+      size: 387975
       nfiles: 1
     - path: reports
       hash: md5
-      md5: 5fc4b2ab1a4325430c2badc57c795dcc.dir
-      size: 3949740
+      md5: a35cbde3e14cba506b7128cb7df3b762.dir
+      size: 3949700
       nfiles: 2
   train:
     cmd: "poetry run python src/model/price/train.py\ngit commit -am \"Updated model

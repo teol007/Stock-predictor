@@ -193,6 +193,11 @@ with mlflow.start_run(run_name="train_price"):
     # Compress keras model using quantization and save it
     converter = tf.lite.TFLiteConverter.from_keras_model(model)
     converter.optimizations = [tf.lite.Optimize.DEFAULT]  # Enables weight quantization
+    converter.target_spec.supported_ops = [
+        tf.lite.OpsSet.TFLITE_BUILTINS,
+        tf.lite.OpsSet.SELECT_TF_OPS
+    ]
+    converter._experimental_lower_tensor_list_ops = False
     quantized_model = converter.convert()
 
     compressed_model_path = f"models/price/model_price_{dataset_name}_quantization.tflite"
