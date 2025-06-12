@@ -86,31 +86,31 @@ stages:
   train:
     cmd: "poetry run python src/model/price/train.py\ngit commit -am \"Updated model
       on `date` with DVC pipeline and GitHub workflows\" || echo \"Ignore error\"\n\
-      \ git push || echo \"Ignore error\"\ndvc push || echo \"Ignore error\"\n"
+      git push || echo \"Ignore error\"\ndvc push || echo \"Ignore error\"\n"
     deps:
     - path: data/preprocessed/price/
       hash: md5
-      md5: 88991b75316fb667d86cfb4b6f9f6c23.dir
-      size: 388032
+      md5: a5e1e141a64a7666f3611eb2cb62ddd2.dir
+      size: 382704
       nfiles: 1
     - path: data/reference/price
       hash: md5
-      md5: 88991b75316fb667d86cfb4b6f9f6c23.dir
-      size: 388032
+      md5: a5e1e141a64a7666f3611eb2cb62ddd2.dir
+      size: 382704
       nfiles: 1
     - path: gx/uncommitted
       hash: md5
-      md5: c3ecab7ded985fcc07e394592ca42078.dir
-      size: 8748488
-      nfiles: 102
+      md5: 451864c185d379fe806be0eb895f79b9.dir
+      size: 8832702
+      nfiles: 104
     - path: src/model/price/preprocess.py
       hash: md5
-      md5: e4a9f5b7431772373df796ac2d914316
-      size: 2037
+      md5: d2e7954043164204ac06f32f72d2bfaa
+      size: 1976
     - path: src/model/price/train.py
       hash: md5
-      md5: 457256de1dffd95a837e381d31cb21ba
-      size: 8950
+      md5: c022d5e577fb3314e5d23d484a4e0037
+      size: 8727
     params:
       params.yaml:
         train_price.dataset_filename: AAPL.csv
@@ -125,6 +125,6 @@ stages:
     outs:
     - path: models
       hash: md5
-      md5: c17348de3734adabcb14c798bbc323a2.dir
-      size: 626502
+      md5: 6a967bd4ed4803634cbe04a4fb200dd3.dir
+      size: 626069
       nfiles: 4
