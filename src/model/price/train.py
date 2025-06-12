@@ -190,6 +190,17 @@ with mlflow.start_run(run_name="train_price"):
     model.save(keras_model_path)
     mlflow.log_artifact(keras_model_path)
     
+    # Compress keras model using quantization and save it
+    converter = tf.lite.TFLiteConverter.from_keras_model(model)
+    converter.optimizations = [tf.lite.Optimize.DEFAULT]  # Enables weight quantization
+    quantized_model = converter.convert()
+
+    compressed_model_path = f"models/price/model_price_{dataset_name}_quantization.tflite"
+    with open(compressed_model_path, "wb") as f:
+        f.write(quantized_model)
+
+    mlflow.log_artifact(compressed_model_path)
+    
     # Save the model in ONNX format
     inputs = tf.keras.Input(shape=input_shape)
     outputs = model(inputs)
