@@ -84,9 +84,10 @@ stages:
       size: 3949094
       nfiles: 2
   train:
-    cmd: "poetry run python src/model/price/train.py\ngit commit -am \"Updated model
-      on `date` with DVC pipeline and GitHub workflows\" || echo \"Ignore error\"\n\
-      git push || echo \"Ignore error\"\ndvc push || echo \"Ignore error\"\n"
+    cmd: "poetry run python src/model/price/train.py\npoetry run python src/model/activity/train.py\n\
+      git commit -am \"Updated model on `date` with DVC pipeline and GitHub workflows\"\
+      \ || echo \"Ignore error\"\ngit push || echo \"Ignore error\"\ndvc push || echo
+      \"Ignore error\"\n"
     deps:
     - path: data/preprocessed/price/
       hash: md5
@@ -103,6 +104,10 @@ stages:
       md5: f74729bafe1c595ada8d0a2d7aa98dda.dir
       size: 8916994
       nfiles: 106
+    - path: src/model/activity/train.py
+      hash: md5
+      md5: 53b28bdeb5df4f6a413d8e2f638f1e33
+      size: 4239
     - path: src/model/price/preprocess.py
       hash: md5
       md5: d2e7954043164204ac06f32f72d2bfaa
@@ -125,6 +130,6 @@ stages:
     outs:
     - path: models
       hash: md5
-      md5: c66afafc264d75e5bcb0a8c56f88811b.dir
-      size: 626105
-      nfiles: 4
+      md5: 95d8d063e943d78134d8df89a81a13c1.dir
+      size: 30021631
+      nfiles: 5
