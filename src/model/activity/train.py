@@ -77,7 +77,7 @@ def assign_volume_class(v):
 df["volume_class"] = df["volume"].apply(assign_volume_class)
 
 # Prepare features and labels
-X = df[["open_price", "high_price", "low_price", "close_price"]].values
+X = df[["open_price", "high_price", "low_price", "close_price", "volume"]].values
 y = df["volume_class"].values
 
 # Start MLflow experiment

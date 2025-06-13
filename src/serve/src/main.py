@@ -4,9 +4,9 @@ from typing import List
 from datetime import datetime, timedelta, UTC
 import pandas as pd
 
-
 from src.routes.stock_price_route import router as stock_router
 from src.routes.production_metrics_route import router as production_metrics_router
+from src.routes.activity_route import router as activity_router
 from src.download_model import load_registered_model_and_pipeline
 from src.db import db
 
@@ -20,6 +20,7 @@ class PriceInput(BaseModel):
 app = FastAPI()
 app.include_router(stock_router)
 app.include_router(production_metrics_router)
+app.include_router(activity_router)
 
 class ValueItem(BaseModel):
     datetime: str
