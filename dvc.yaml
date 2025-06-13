@@ -56,6 +56,7 @@ stages:
   train:
     cmd: |
       poetry run python src/model/price/train.py
+      poetry run python src/model/activity/train.py
       git commit -am "Updated model on `date` with DVC pipeline and GitHub workflows" || echo "Ignore error"
       git push || echo "Ignore error"
       dvc push || echo "Ignore error"
@@ -65,6 +66,7 @@ stages:
     - data/reference/price       # <-- output of test_data
     - src/model/price/preprocess.py
     - src/model/price/train.py
+    - src/model/activity/train.py
     params:
     - train_price.dataset_filename
     - train_price.target_cols
