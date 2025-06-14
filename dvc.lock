@@ -91,19 +91,19 @@ stages:
     deps:
     - path: data/preprocessed/price/
       hash: md5
-      md5: 9909c11aae963087c98b1a9be8a37eb8.dir
-      size: 382772
+      md5: 4278560c89503c4139278b0962fb8b44.dir
+      size: 384470
       nfiles: 1
     - path: data/reference/price
       hash: md5
-      md5: e0684d91dcb956259a5a2228af73e948.dir
-      size: 382761
+      md5: 33e46f9ef9889fecb790146c89b4e6be.dir
+      size: 384334
       nfiles: 1
     - path: gx/uncommitted
       hash: md5
-      md5: f74729bafe1c595ada8d0a2d7aa98dda.dir
-      size: 8916994
-      nfiles: 106
+      md5: 2fdef9eca104abcf5f28da5e7c0a5c77.dir
+      size: 9001286
+      nfiles: 108
     - path: src/model/activity/train.py
       hash: md5
       md5: 53b28bdeb5df4f6a413d8e2f638f1e33
@@ -130,6 +130,6 @@ stages:
     outs:
     - path: models
       hash: md5
-      md5: 95d8d063e943d78134d8df89a81a13c1.dir
-      size: 30021631
+      md5: e1fba6942c6e3234ed968cd1b8b1b0e7.dir
+      size: 30021678
       nfiles: 5
