@@ -2,8 +2,8 @@ name: Fetch data on schedule
 
 on: 
   workflow_dispatch:
-  schedule:
-    - cron: '15 0 * * *' # Everyday at 0:15 UTC time
+  #schedule:
+  #  - cron: '15 0 * * *' # Everyday at 0:15 UTC time
 
 jobs:
   fetch_price:
